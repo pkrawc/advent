@@ -1,0 +1,21 @@
+{
+  "name": "advent_of_code",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Patrick Krawczykowski <patrick@dreadful.design>",
+  "license": "ISC",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest -w"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": false
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "jest": "^24.9.0"
+  }
+}
