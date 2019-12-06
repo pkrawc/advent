@@ -30,8 +30,6 @@ function partTwo(input) {
     .sort((a, b) => a - b)[0]
 }
 
-console.log(partTwo(test))
-
 module.exports = {
   format,
   buildPath,

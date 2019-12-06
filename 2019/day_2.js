@@ -2,8 +2,10 @@ const input = require("./inputs/day_2")
 
 function getSequence(input, noun, verb) {
   return input
-    .split(",")
-    .map((value, i) => (i === 1 ? noun : i === 2 ? verb : Number(value)))
+    .split(/,/)
+    .map((value, i) =>
+      i === 1 && noun ? noun : i === 2 && verb ? verb : Number(value)
+    )
 }
 
 function getInstructions(sequence) {
@@ -25,6 +27,9 @@ function compute(sequence, instructions) {
         sequence[store] = sequence[a] + sequence[b]
         break
       case 2:
+        sequence[store] = sequence[a]
+        break
+      case 3:
         sequence[store] = sequence[a] * sequence[b]
         break
       case 99:
@@ -55,3 +60,5 @@ function partTwo(input) {
 }
 
 partTwo(input)
+
+module.exports = { getSequence, getInstructions, compute }
