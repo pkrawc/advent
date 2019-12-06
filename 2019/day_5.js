@@ -21,40 +21,68 @@ function compileWithInput(sequence, input) {
     const b = getMode(secondMode, sequence[index + 2], sequence)
     const insert = sequence[index + 3]
     switch (code) {
-      case 1:
+      case 1: // Add params
         sequence[insert] = a + b
-        console.log(a + b)
         index += 4
         break
-      case 2:
+      case 2: // Multiply params
         sequence[insert] = a * b
         index += 4
         break
-      case 3:
-        sequence[a] = input
+      case 3: // Get input
+        sequence[sequence[index + 1]] = input
         index += 2
         break
-      case 4:
-        output.push(sequence[a])
+      case 4: // Write output
+        output.push(sequence[sequence[index + 1]])
         index += 2
+        break
+      case 5: // Jump if true
+        if (Number(a)) index = b
+        else index += 3
+        break
+      case 6: // Jump if false
+        if (!Number(a)) index = b
+        else index += 3
+        break
+      case 7: // Less than
+        sequence[insert] = a < b ? 1 : 0
+        index += 4
+        break
+      case 8: // Equal to
+        sequence[insert] = Number(a) === Number(b) ? 1 : 0
+        index += 4
         break
       default:
         throw Error(`Encountered an incorrect opCode ${code} at ${index}`)
     }
   }
-  return [output]
+  return [sequence, output]
 }
 
-function dayFive(input) {
-  const sequence = getSequence(input)
-  try {
-    const result = compileWithInput(sequence, 1)
-    return result
-  } catch (err) {
-    console.log(err.message)
+class DayFive {
+  partOne(sequence, input) {
+    try {
+      const result = compileWithInput(getSequence(sequence), input)
+      return result
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+  partTwo(sequence, input) {
+    try {
+      const result = compileWithInput(getSequence(sequence), input)
+      return result
+    } catch (err) {
+      console.log(err.message)
+    }
   }
 }
 
-console.log(dayFive(input))
+const day = new DayFive()
 
-module.exports = dayFive
+console.log(day.partTwo(input, 5)[1])
+
+// console.log(dayFive(input)[1])
+
+module.exports = DayFive
