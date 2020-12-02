@@ -2,5 +2,5 @@
 Advent Of Code
 
 ```bash
-git clone && npm install && npm test
+git clone && yarn && yarn start day_<number>
 ```
