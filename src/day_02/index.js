@@ -4,8 +4,9 @@ const prepareInput = (rawInput) => rawInput.trim().split(/\n/)
 
 const input = prepareInput(readInput())
 
-const getCharCount = (char, string) =>
-  (string.match(new RegExp(`${char}`, "g")) || []).length
+function getCharCount(char, string) {
+  return (string.match(new RegExp(char, "g")) || []).length
+}
 
 function partOne(arr) {
   const count = arr.reduce((passed, input) => {
