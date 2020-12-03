@@ -22,18 +22,6 @@ const prepareInput = (rawInput) =>
 
 const input = prepareInput(readInput())
 
-function getArea(neededWidth, input) {
-  const inputWidth = input[0].length
-  return input.map((line) => {
-    const repeat = neededWidth / inputWidth
-    const newLine = []
-    for (let i = 0; i <= repeat; i++) {
-      newLine.push(...line)
-    }
-    return newLine
-  })
-}
-
 function getTrees(slope, input) {
   const coords = {
     x: 0,
@@ -41,12 +29,11 @@ function getTrees(slope, input) {
     trees: 0,
   }
   const height = input.length
-  const needed = Math.round((height / slope.y) * slope.x)
-  const field = getArea(needed, input)
-  while (coords.x < needed) {
+  const width = input[0].length
+  while (coords.y < height) {
     const { x, y } = coords
-    const isTree = field[y][x] === "#"
-    coords.x += slope.x
+    const isTree = input[y][x] === "#"
+    coords.x = (slope.x + coords.x) % width
     coords.y += slope.y
     if (isTree) coords.trees++
   }
@@ -75,11 +62,11 @@ function partTwo(input) {
 
 /* Tests */
 
-const testInput = prepareInput(rawTestInput)
+// const testInput = prepareInput(rawTestInput)
 
-const testResult = partOne(testInput)
+// const testResult = partOne(testInput)
 
-test(testResult, 7)
+// test(testResult, 7)
 
 /* Results */
 
