@@ -38,57 +38,7 @@ const prepareInput = (rawInput) =>
 
 const input = prepareInput(readInput())
 
-const validate = {
-  byr: (i) => {
-    // console.log(i)
-    return 1920 >= parseInt(i) <= 2002
-  },
-  iyr: (i) => {
-    // console.log(i)
-    return 2010 >= parseInt(i) <= 2020
-  },
-  eyr: (i) => {
-    // console.log(i)
-    return 2020 >= parseInt(i) <= 2030
-  },
-  hgt: (i) => {
-    // console.log("hgt:", i)
-    const ending = i?.substring(i.length - 2)
-    const num = i?.substring(0, i.length - 2)
-    if (ending === "in") {
-      return 59 <= parseInt(num) >= 76
-    }
-    if (ending === "cm") {
-      return 150 <= parseInt(num) <= 193
-    }
-    return false
-  },
-  hcl: (i) => {
-    // console.log(i)
-    const hairColor = i?.match(/^#[0-9a-f]{6}$/i)
-    return hairColor
-  },
-  ecl: (i) => {
-    // console.log(i)
-    const eyeColors = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
-    return eyeColors.includes(i)
-  },
-  pid: (i) => {
-    // console.log("pid:", i)
-    return i?.match(/^[0-9]{9}$/)
-  },
-}
-
-function partOne(input) {
-  const results = input.reduce((count, passport) => {
-    const passportFields = passport.map((pass) => pass.split(":")[0])
-    for (field in validate) {
-      if (!passportFields.includes(field) && field !== "cid") return count
-    }
-    return count + 1
-  }, 0)
-  return results
-}
+const keys = Object.keys(validators)
 
 const validators = {
   byr: (v) => v >= 1920 && v <= 2002,
@@ -100,7 +50,16 @@ const validators = {
   pid: (v) => /^\d{9}$/.test(v),
 }
 
-const keys = Object.keys(validators)
+function partOne(input) {
+  const results = input.reduce((count, passport) => {
+    const passportFields = passport.map((pass) => pass.split(":")[0])
+    for (field in validators) {
+      if (!passportFields.includes(field) && field !== "cid") return count
+    }
+    return count + 1
+  }, 0)
+  return results
+}
 
 function partTwo(input) {
   const re = new RegExp(`(${keys.join("|")}):\\S*`, "g")
@@ -130,12 +89,12 @@ function partTwo(input) {
 
 /* Results */
 
-// console.log("-----------------")
+console.log("-----------------")
 
-// console.time("Part One Time")
-// const partOneResult = partOne(input)
-// console.timeEnd("Part One Time")
-// console.log("Solution to part 1: ", partOneResult)
+console.time("Part One Time")
+const partOneResult = partOne(input)
+console.timeEnd("Part One Time")
+console.log("Solution to part 1: ", partOneResult)
 
 console.log("-----------------")
 
