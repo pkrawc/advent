@@ -1,4 +1,4 @@
-const { readInput, test } = require("../utils")
+const { readInput, test } = require("../../utils")
 
 const rawTestInput = `
 ..##.......
@@ -32,8 +32,8 @@ function getTrees(slope, input) {
   const width = input[0].length
   while (coords.y < height) {
     const { x, y } = coords
-    const isTree = input[y][x] === "#"
-    coords.x = (slope.x + coords.x) % width
+    const isTree = input[y][x % width] === "#"
+    coords.x += slope.x
     coords.y += slope.y
     if (isTree) coords.trees++
   }
