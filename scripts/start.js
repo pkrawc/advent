@@ -1,15 +1,21 @@
 const { spawn } = require("child_process")
-const { readdirSync } = require("fs")
-const { cp } = require("shelljs")
+const { readdirSync, existsSync } = require("fs")
+const { cp, mkdir } = require("shelljs")
 
-const day = process.argv[2]
-const days = readdirSync("./src")
+const year = process.argv[2]
+const day = process.argv[3]
+
+if (!existsSync(`./${year}`)) {
+  mkdir(`${year}`)
+}
+
+const days = readdirSync(`./${year}`)
 
 if (!days.includes(day)) {
   console.log(`Creating file structure for ${day}...`)
-  cp("-r", "src/template", `src/${day}`)
+  cp("-r", "template", `${year}/${day}`)
 }
 
-spawn("nodemon", [`src/${day}/index.js`], {
+spawn("nodemon", [`${year}/${day}/index.js`], {
   stdio: "inherit",
 })

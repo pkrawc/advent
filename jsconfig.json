@@ -4,7 +4,7 @@
     "target": "es6",
     "baseUrl": ".",
     "paths": {
-      "utils":["src/utils"]
+      "utils":["utils/index.js"]
     }
   },
   "exclude": ["node_modules"]
