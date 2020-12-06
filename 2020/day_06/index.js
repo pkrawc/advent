@@ -1,4 +1,3 @@
-const { groupEnd } = require("console")
 const { readInput, test } = require("../../utils")
 
 const prepareInput = (rawInput) => rawInput.trim().split("\n\n")
