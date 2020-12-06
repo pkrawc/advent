@@ -6,36 +6,31 @@ const prepareInput = (rawInput) => rawInput.trim().split("\n\n")
 const input = prepareInput(readInput())
 
 const getAnswers = (group) =>
-  new Set(
-    group
-      .split(/\n/)
-      .reduce((s, l) => s.concat(l))
-      .split("")
+  Array.from(
+    new Set(
+      group
+        .split(/\n/)
+        .reduce((s, l) => s.concat(l))
+        .split("")
+    )
   )
 
+const getCount = (count, group) => (count += group.length)
+
 function partOne(input) {
-  return input
-    .map((group) => {
-      return new Set(
-        group
-          .split(/\n/)
-          .reduce((s, l) => s.concat(l))
-          .split("")
-      )
-    })
-    .reduce((count, set) => (count += set.size), 0)
+  return input.map(getAnswers).reduce(getCount, 0)
 }
 
 function partTwo(input) {
   return input
     .map((group) => {
-      const answers = Array.from(getAnswers(group))
+      const answers = getAnswers(group)
       const eachAnswer = group.split(/\n/)
-      return answers.map((letter) =>
+      return answers.filter((letter) =>
         eachAnswer.every((answer) => answer.split("").includes(letter))
       )
     })
-    .reduce((count, group) => (count += group.filter((item) => item).length), 0)
+    .reduce(getCount, 0)
 }
 
 /* Tests */
