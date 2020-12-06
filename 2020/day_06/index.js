@@ -24,10 +24,10 @@ function partOne(input) {
 function partTwo(input) {
   return input
     .map((group) => {
-      const answers = getAnswers(group)
-      const eachAnswer = group.split(/\n/)
-      return answers.filter((letter) =>
-        eachAnswer.every((answer) => answer.split("").includes(letter))
+      const possibleAnswers = getAnswers(group)
+      const eachPerson = group.split(/\n/)
+      return possibleAnswers.filter((letter) =>
+        eachPerson.every((answer) => answer.split("").includes(letter))
       )
     })
     .reduce(getCount, 0)
