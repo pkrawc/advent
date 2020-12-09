@@ -16,16 +16,21 @@ const prepareInput = (rawInput) => rawInput.trim().split(/\n/)
 
 const input = prepareInput(readInput())
 
-function compile(input) {
+function compile(input, loop = true) {
   let acc = 0
   let index = 0
+  let repeat = false
   const visited = new Set()
-  while (index < input.length) {
-    if (visited.has(`${input[index]}-${index}`)) {
-      return false
+  while (index < input.length || repeat) {
+    if (visited.has(index)) {
+      if (loop) return false
+      else {
+        repeat = true
+        continue
+      }
     }
     const [inst, arg] = input[index].split(" ")
-    visited.add(`${input[index]}-${index}`)
+    visited.add(index)
     switch (inst) {
       case "nop":
         index++
@@ -45,7 +50,7 @@ function compile(input) {
 }
 
 function partOne(input) {
-  return compile(input)
+  return compile(input, false)
 }
 
 function partTwo(input) {
