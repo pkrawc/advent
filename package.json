@@ -19,7 +19,7 @@
     "get-caller-file": "^2.0.5"
   },
   "devDependencies": {
-    "@types/node": "^14.14.10",
+    "@types/node": "^14.14.12",
     "dequal": "^2.0.2",
     "jest": "^26.6.3",
     "nodemon": "^2.0.6",
