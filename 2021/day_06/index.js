@@ -44,7 +44,7 @@ function partTwo(input) {
   const fishes = input.map((f) => parseInt(f))
   const states = Array.from(Array(10), (item, idx) => parseInt(idx))
   const counts = states.map((s) => fishes.filter((c) => c === s).length)
-  // console.log(states)
+  // console.log(counts)
   for (let i = 0; i < 256; i++) {
     counts[9] += counts[0]
     counts[7] += counts[0]
