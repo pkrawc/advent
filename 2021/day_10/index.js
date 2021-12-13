@@ -13,36 +13,70 @@ const closingMap = new Map([
   ["<", ">"],
 ])
 
-const scoreMap = new Map([
+const corruptedScoreMap = new Map([
   [">", 25137],
   ["}", 1197],
   ["]", 57],
   [")", 3],
 ])
 
-function partOne(input) {
-  let scores = []
+const autoCompleteMap = new Map([
+  [")", 1],
+  ["]", 2],
+  ["}", 3],
+  [">", 4],
+])
 
-  for (let line of input) {
-    const chars = [...line.trim()]
-    const matched = []
-    for (let char of chars) {
-      if (openingChars.includes(char)) {
-        matched.push(closingMap.get(char))
+function getCorruptedScore(line) {
+  const chars = [...line.trim()]
+  const matched = []
+  let lineScore = 0
+  for (let char of chars) {
+    if (openingChars.includes(char)) {
+      matched.push(closingMap.get(char))
+    } else {
+      if (char === matched[matched.length - 1]) {
+        matched.pop()
       } else {
-        if (char === matched.slice(-1)[0]) {
-          matched.pop()
-        } else {
-          scores.push(scoreMap.get(char))
-        }
+        lineScore += corruptedScoreMap.get(char)
+        break
       }
     }
+  }
+  return lineScore
+}
+
+function partOne(input) {
+  let scores = 0
+  for (let line of input) {
+    const lineScore = getCorruptedScore(line)
+    scores += lineScore
   }
   return scores
 }
 
 function partTwo(input) {
-  return
+  let scores = []
+  for (let line of input) {
+    const lineScore = getCorruptedScore(line)
+    if (lineScore === 0) {
+      const matched = []
+      let autoCompleteScore = 0
+
+      for (char of [...line]) {
+        if (openingChars.includes(char)) matched.push(closingMap.get(char))
+        else if (char === matched[matched.length - 1]) matched.pop()
+      }
+
+      matched.reverse().forEach((needed) => {
+        autoCompleteScore *= 5
+        autoCompleteScore += autoCompleteMap.get(needed)
+      })
+
+      scores.push(autoCompleteScore)
+    }
+  }
+  return scores.sort((a, b) => a - b)[Math.round(scores.length / 2)]
 }
 
 /* Tests */
@@ -58,24 +92,23 @@ const testInput = `[({(<(())[]>[[{[]{<()<>>
   <{([([[(<>()){}]>(<<{{
   <{([{{}}[<[[[<>{}]]]>[]]`
 
-const result = partOne(prepareInput(testInput))
-
-test(result, 26397)
+test(partOne(prepareInput(testInput)), 26397)
+test(partTwo(prepareInput(testInput)), 288957)
 
 /* Results */
 
-// console.log("-----------------")
+console.log("-----------------")
 
-// console.time("Part One Time")
-// const partOneResult = partOne(input)
-// console.timeEnd("Part One Time")
-// console.log("Solution to part 1: ", partOneResult)
+console.time("Part One Time")
+const partOneResult = partOne(input)
+console.timeEnd("Part One Time")
+console.log("Solution to part 1: ", partOneResult)
 
-// console.log("-----------------")
+console.log("-----------------")
 
-// console.time("Part Two Time")
-// const partTwoResult = partTwo(input)
-// console.timeEnd("Part Two Time")
-// console.log("Solution to part 2: ", partTwoResult)
+console.time("Part Two Time")
+const partTwoResult = partTwo(input)
+console.timeEnd("Part Two Time")
+console.log("Solution to part 2: ", partTwoResult)
 
-// console.log("-----------------")
+console.log("-----------------")
