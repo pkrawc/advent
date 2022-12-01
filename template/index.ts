@@ -1,15 +1,15 @@
 import { readInput, test } from "@utils"
 
-const prepareInput = (rawInput) => rawInput
+const prepareInput = (rawInput: string) => rawInput
 
 const input = prepareInput(readInput())
 
-function partOne(input) {
-  return
+function partOne<T>(input: T) {
+  return input
 }
 
-function partTwo(input) {
-  return
+function partTwo<T>(input: T) {
+  return input
 }
 
 /* Tests */
