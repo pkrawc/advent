@@ -1,6 +1,6 @@
-const { spawn } = require("child_process")
-const { readdirSync, existsSync } = require("fs")
-const { cp, mkdir } = require("shelljs")
+import { spawn } from "child_process"
+import { readdirSync, existsSync } from "fs"
+import { cp, mkdir } from "shelljs"
 
 const year = process.argv[2]
 const day = process.argv[3]
@@ -16,6 +16,8 @@ if (!days.includes(day)) {
   cp("-r", "template", `${year}/${day}`)
 }
 
-spawn("nodemon", [`${year}/${day}/index.js`], {
+spawn("nodemon", [`${year}/${day}/index.ts`], {
   stdio: "inherit",
 })
+
+export {}

@@ -1,4 +1,4 @@
-const { readInput, test } = require("../../utils")
+import { readInput, test } from "@utils"
 
 const prepareInput = (rawInput) => rawInput
 
@@ -33,3 +33,5 @@ console.timeEnd("Part Two Time")
 console.log("Solution to part 2: ", partTwoResult)
 
 console.log("-----------------")
+
+export {}
