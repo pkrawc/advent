@@ -1,11 +1,11 @@
 import { readInput, test } from "@utils"
 
-const prepareInput = (rawInput) =>
+const prepareInput = (rawInput: string) =>
   rawInput.split("\n\n").map((line) => line.split("\n"))
 
 const input = prepareInput(readInput())
 
-function getLargestCalories(input) {
+function getLargestCalories(input: string[][]) {
   return input
     .map((group) => {
       let sum = 0

@@ -8,7 +8,7 @@ import getCallerFile from "get-caller-file"
  * @param {string} filename
  * @returns File contents as a string
  */
-export function readInput(filename = "input.txt") {
+export function readInput(filename: string = "input.txt") {
   const file = getCallerFile()
     .split("/")
     .slice(0, -1)
@@ -19,7 +19,7 @@ export function readInput(filename = "input.txt") {
 
 let index = 0
 
-export function test(input, expected) {
+export function test(input: any, expected: typeof input) {
   const passed = dequal(input, expected)
 
   if (passed) {
