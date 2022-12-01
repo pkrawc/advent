@@ -5,7 +5,7 @@ const prepareInput = (rawInput) =>
 
 const input = prepareInput(readInput())
 
-function partOne(input) {
+function getLargestCalories(input) {
   return input
     .map((group) => {
       let sum = 0
@@ -14,14 +14,17 @@ function partOne(input) {
       })
       return sum
     })
-    .sort()
-    .reverse()
-    .splice(0, 3)
-    .reduce((a, b) => a + b)
+    .sort((a, b) => b - a)
+}
+
+function partOne(input) {
+  return getLargestCalories(input)[0]
 }
 
 function partTwo(input) {
-  return
+  return getLargestCalories(input)
+    .splice(0, 3)
+    .reduce((a, b) => a + b, 0)
 }
 
 /* Tests */
