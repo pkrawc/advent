@@ -1,6 +1,6 @@
-const { readFileSync } = require("fs")
-const { dequal } = require("dequal")
-const getCallerFile = require("get-caller-file")
+import { readFileSync } from "fs"
+import { dequal } from "dequal"
+import getCallerFile from "get-caller-file"
 
 /**
  * Assumes that the file you're calling is right next to the file you're calling from.
@@ -8,7 +8,7 @@ const getCallerFile = require("get-caller-file")
  * @param {string} filename
  * @returns File contents as a string
  */
-function readInput(filename = "input.txt") {
+export function readInput(filename = "input.txt") {
   const file = getCallerFile()
     .split("/")
     .slice(0, -1)
@@ -19,7 +19,7 @@ function readInput(filename = "input.txt") {
 
 let index = 0
 
-function test(input, expected) {
+export function test(input, expected) {
   const passed = dequal(input, expected)
 
   if (passed) {
@@ -33,5 +33,3 @@ function test(input, expected) {
   }
   index++
 }
-
-module.exports = { readInput, test }
