@@ -4,11 +4,11 @@ const prepareInput = (rawInput: string) => rawInput
 
 const input = prepareInput(readInput())
 
-function partOne<T>(input: T) {
+function partOne(input) {
   return input
 }
 
-function partTwo<T>(input: T) {
+function partTwo(input) {
   return input
 }
 
