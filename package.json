@@ -20,7 +20,6 @@
   },
   "devDependencies": {
     "@tsconfig/next": "^1.0.4",
-    "@tsconfig/recommended": "^1.0.1",
     "@types/node": "^16.11.11",
     "@types/shelljs": "^0.8.11",
     "dequal": "^2.0.2",

@@ -4,6 +4,12 @@ const prepareInput = (rawInput: string) => rawInput.split(/\n/)
 
 const input = prepareInput(readInput())
 
+const letterMap = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  .split("")
+  .reduce((prev, letter, idx) => {
+    return { ...prev, [letter]: idx + 1 }
+  }, {})
+
 function findCommonSplit(first, second) {
   let commonLetters = ""
   for (let i = 0; i < first.length; i++) {
@@ -24,11 +30,11 @@ function findCommonThreeGroup(group) {
   return commonLetters
 }
 
-const letterMap = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  .split("")
-  .reduce((prev, letter, idx) => {
-    return { ...prev, [letter]: idx + 1 }
-  }, {})
+function sumCommonLetters(input: string[]) {
+  return input
+    .map((l) => letterMap[l.charAt(0)])
+    .reduce((prev, curr) => prev + (curr || 0), 0)
+}
 
 function partOne(input: string[]) {
   const splitSacks = input.map((line) => {
@@ -39,9 +45,7 @@ function partOne(input: string[]) {
   const commonLetters = splitSacks.map(([first, second]) =>
     findCommonSplit(first, second)
   )
-  return commonLetters
-    .map((l) => letterMap[l.charAt(0)])
-    .reduce((prev, curr) => prev + (curr || 0), 0)
+  return sumCommonLetters(commonLetters)
 }
 
 function partTwo(input: string[]) {
@@ -55,9 +59,7 @@ function partTwo(input: string[]) {
   }
 
   const commonLetters = sackGroups.map((group) => findCommonThreeGroup(group))
-  return commonLetters
-    .map((l) => letterMap[l.charAt(0)])
-    .reduce((prev, curr) => prev + (curr || 0), 0)
+  return sumCommonLetters(commonLetters)
 }
 
 /* Results */
