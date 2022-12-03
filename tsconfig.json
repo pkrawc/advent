@@ -5,6 +5,7 @@
     "module": "CommonJS",
     "moduleResolution": "Node",
     "esModuleInterop": true,
+    "downlevelIteration": true,
     "baseUrl": ".",
     "paths": {
       "@utils": ["utils/index.ts"]
