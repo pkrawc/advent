@@ -14,32 +14,6 @@ function findCommonSplit(first, second) {
   return commonLetters
 }
 
-const letterMap = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  .split("")
-  .reduce((prev, letter, idx) => {
-    return { ...prev, [letter]: idx + 1 }
-  }, {})
-
-function partOne(input) {
-  const splitSacks = input.map((line) => {
-    const first = line.slice(0, line.length / 2)
-    const second = line.slice(line.length / 2)
-    return [first, second]
-  })
-  const commonLetters = splitSacks.map(([first, second]) =>
-    findCommonSplit(first, second)
-  )
-
-  console.log({ commonLetters, zValue: letterMap["z"] })
-
-  return commonLetters
-    .map((letters) => {
-      const letter = letters.charAt(0)
-      return letterMap[letter]
-    })
-    .reduce((prev, curr) => prev + (curr || 0), 0)
-}
-
 function findCommonThreeGroup(group) {
   let commonLetters = ""
   for (let i = 0; i < group[0].length; i++) {
@@ -49,7 +23,28 @@ function findCommonThreeGroup(group) {
   }
   return commonLetters
 }
-function partTwo(input) {
+
+const letterMap = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  .split("")
+  .reduce((prev, letter, idx) => {
+    return { ...prev, [letter]: idx + 1 }
+  }, {})
+
+function partOne(input: string[]) {
+  const splitSacks = input.map((line) => {
+    const first = line.slice(0, line.length / 2)
+    const second = line.slice(line.length / 2)
+    return [first, second]
+  })
+  const commonLetters = splitSacks.map(([first, second]) =>
+    findCommonSplit(first, second)
+  )
+  return commonLetters
+    .map((l) => letterMap[l.charAt(0)])
+    .reduce((prev, curr) => prev + (curr || 0), 0)
+}
+
+function partTwo(input: string[]) {
   const sackGroups = []
   for (let i = 0, g = 0; i < input.length; i++) {
     if (i >= 3 && i % 3 === 0) {
@@ -64,17 +59,6 @@ function partTwo(input) {
     .map((l) => letterMap[l.charAt(0)])
     .reduce((prev, curr) => prev + (curr || 0), 0)
 }
-
-// const testInput = prepareInput(`vJrwpWtwJgWrhcsFMMfFFhFp
-// jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
-// PmmdzqPrVvPwwTWBwg
-// wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
-// ttgJtRGJQctTZtZT
-// CrZsJsPPZsGzwwsLwLmpwMDw`)
-
-// /* Tests */
-
-// test(partOne(testInput), 157)
 
 /* Results */
 
