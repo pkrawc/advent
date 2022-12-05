@@ -4,9 +4,6 @@ import getCallerFile from "get-caller-file"
 
 /**
  * Assumes that the file you're calling is right next to the file you're calling from.
- *
- * @param {string} filename
- * @returns File contents as a string
  */
 export function readInput(filename: string = "input.txt") {
   const file = getCallerFile()
