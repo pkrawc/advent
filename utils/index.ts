@@ -30,3 +30,16 @@ export function test(input: any, expected: typeof input) {
   }
   index++
 }
+
+export function getNeighbors(x: number, y: number) {
+  return [
+    [x - 1, y - 1],
+    [x, y - 1],
+    [x + 1, y - 1],
+    [x - 1, y],
+    [x + 1, y],
+    [x - 1, y + 1],
+    [x, y + 1],
+    [x + 1, y + 1],
+  ]
+}
