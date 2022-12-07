@@ -1,5 +1,4 @@
 import { readInput, test } from "@utils"
-import { combination } from "generatorics"
 
 const prepareInput = (rawInput: string) => rawInput.split("")
 
