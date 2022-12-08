@@ -6,11 +6,9 @@ const input = prepareInput(readInput())
 
 const testInput = prepareInput(readInput("test-input.txt"))
 
-type SystemItem = { [key: string]: { size: number } }
-
-function getSystem(input: string[]) {
+function getDirectories(input: string[]) {
   const path = []
-  const fileMap = new Map()
+  const fileMap = new Map<string, number>()
   const dirMap = new Map([["root", 0]])
   for (let command of input) {
     if (command.startsWith("$ cd")) {
@@ -28,19 +26,19 @@ function getSystem(input: string[]) {
       dirMap.set(path.join("/") + `/${name}`, 0)
     }
   }
+  // return fileMap
   return Array.from(dirMap).map(([dirKey, size]) => {
+    console.log(dirKey)
     const files = Array.from(fileMap).filter(([key]) => key.includes(dirKey))
-    console.log({ dirKey, files })
     const dirSize = files.reduce((acc, curr) => acc + curr[1], size)
     return { path: dirKey, size: dirSize, files }
   })
 }
 
 function partOne(input: string[]) {
-  const directories = getSystem(input)
-  return directories
-    .filter((dir) => dir.size <= 100_000)
-    .reduce((acc, curr) => acc + curr.size, 0)
+  const directories = getDirectories(input).filter((dir) => dir.size <= 100000)
+  console.log(directories.map((dir) => dir.path))
+  return directories.reduce((acc, curr) => acc + curr.size, 0)
 }
 
 function partTwo(input) {
@@ -49,14 +47,14 @@ function partTwo(input) {
 
 /* Tests */
 
-const directories = getSystem(testInput)
-console.log(directories)
-test(
-  directories
-    .filter((dir) => dir.size <= 100_000)
-    .reduce((acc, curr) => acc + curr.size, 0),
-  95437
-)
+// const directories = getSystem(testInput)
+// console.log(directories)
+// test(
+//   directories
+//     .filter((dir) => dir.size <= 100000)
+//     .reduce((acc, curr) => acc + curr.size, 0),
+//   95437
+// )
 
 /* Results */
 
