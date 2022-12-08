@@ -30,6 +30,7 @@ function getSystem(input: string[]) {
   }
   return Array.from(dirMap).map(([dirKey, size]) => {
     const files = Array.from(fileMap).filter(([key]) => key.includes(dirKey))
+    console.log({ dirKey, files })
     const dirSize = files.reduce((acc, curr) => acc + curr[1], size)
     return { path: dirKey, size: dirSize, files }
   })
@@ -38,7 +39,7 @@ function getSystem(input: string[]) {
 function partOne(input: string[]) {
   const directories = getSystem(input)
   return directories
-    .filter((dir) => dir.size < 100_000)
+    .filter((dir) => dir.size <= 100_000)
     .reduce((acc, curr) => acc + curr.size, 0)
 }
 
