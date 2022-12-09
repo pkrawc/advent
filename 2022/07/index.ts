@@ -30,9 +30,7 @@ function getDirectories(input: string[]) {
       dirMap.set(path.join("/") + `/${name}`, 0)
     }
   }
-  // return fileMap
   return Array.from(dirMap).map(([dirKey, size]) => {
-    console.log(dirKey)
     const files = Array.from(fileMap).filter(([key]) => key.includes(dirKey))
     const dirSize = files.reduce((acc, curr) => acc + curr[1], size)
     return { path: dirKey, size: dirSize, files }
@@ -51,21 +49,21 @@ function partTwo(input) {
 
 /* Tests */
 
-// const first = getDirectories(test1)
+const first = getDirectories(test1)
 
-// const firstCount = first
-//   .filter((dir) => dir.size <= 100000)
-//   .reduce((a, b) => a + b.size, 0)
+const firstCount = first
+  .filter((dir) => dir.size <= 100000)
+  .reduce((a, b) => a + b.size, 0)
 
-// test(firstCount, 95437)
+test(firstCount, 95437)
 
-// const second = getDirectories(test2)
+const second = getDirectories(test2)
 
-// const secondCount = second
-//   .filter((dir) => dir.size <= 100000)
-//   .reduce((a, b) => a + b.size, 0)
+const secondCount = second
+  .filter((dir) => dir.size <= 100000)
+  .reduce((a, b) => a + b.size, 0)
 
-// test(secondCount, 5)
+test(secondCount, 5)
 
 const third = getDirectories(test3)
 
