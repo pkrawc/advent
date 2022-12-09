@@ -4,7 +4,11 @@ const prepareInput = (rawInput: string) => rawInput.split("\n")
 
 const input = prepareInput(readInput())
 
-const testInput = prepareInput(readInput("test-input.txt"))
+const test1 = prepareInput(readInput("test-1.txt"))
+
+const test2 = prepareInput(readInput("test-2.txt"))
+
+const test3 = prepareInput(readInput("test-3.txt"))
 
 function getDirectories(input: string[]) {
   const path = []
@@ -47,25 +51,40 @@ function partTwo(input) {
 
 /* Tests */
 
-// const directories = getSystem(testInput)
-// console.log(directories)
-// test(
-//   directories
-//     .filter((dir) => dir.size <= 100000)
-//     .reduce((acc, curr) => acc + curr.size, 0),
-//   95437
-// )
+// const first = getDirectories(test1)
+
+// const firstCount = first
+//   .filter((dir) => dir.size <= 100000)
+//   .reduce((a, b) => a + b.size, 0)
+
+// test(firstCount, 95437)
+
+// const second = getDirectories(test2)
+
+// const secondCount = second
+//   .filter((dir) => dir.size <= 100000)
+//   .reduce((a, b) => a + b.size, 0)
+
+// test(secondCount, 5)
+
+const third = getDirectories(test3)
+
+const thirdCount = third
+  .filter((dir) => dir.size <= 100000)
+  .reduce((a, b) => a + b.size, 0)
+
+test(thirdCount, 7)
 
 /* Results */
 
-console.log("-----------------")
+// console.log("-----------------")
 
-console.time("Part One Time")
-const partOneResult = partOne(input)
-console.timeEnd("Part One Time")
-console.log("Solution to part 1: ", partOneResult)
+// console.time("Part One Time")
+// const partOneResult = partOne(input)
+// console.timeEnd("Part One Time")
+// console.log("Solution to part 1: ", partOneResult)
 
-console.log("-----------------")
+// console.log("-----------------")
 
 // console.time("Part Two Time")
 // const partTwoResult = partTwo(input)
