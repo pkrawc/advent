@@ -19,6 +19,15 @@ function moveDirection(movement, axis, steps, hx, hy, tx, ty, set) {
   }
 }
 
+function isTouching(hx, hy, tx, ty) {
+  return Math.abs(tx - hx) <= 1 && Math.abs(ty - hy) <= 1
+}
+
+function move(hx, hy, tx, ty) {
+  if (false) {
+  }
+}
+
 function mapTailMovement(input) {
   const visited = new Set()
   let [tx, ty] = [0, 0]
@@ -29,50 +38,42 @@ function mapTailMovement(input) {
       case "R": {
         for (let step = 0; step < steps; step++) {
           hx = hx + 1
-          // Move Diagonally
-          if (ty !== hy && tx !== ty) {
-            tx = tx + 1
-            ty = hx - tx
-          } else {
-            tx = tx + 1
-          }
-          visited.add(`${tx},${ty}`)
+
+          // Check for touching
+
+          // Make touching
+
+          // Add to visited
         }
       }
       case "U": {
         for (let step = 0; step < steps; step++) {
           hy = hy - 1
-          if (ty !== hy && tx !== ty) {
-            tx = hx - tx
-            ty = ty - 1
-          } else {
-            ty = ty - 1
-          }
-          visited.add(`${tx},${ty}`)
+          // Check for touching
+
+          // Make touching
+
+          // Add to visited
         }
       }
       case "L": {
         for (let step = 0; step < steps; step++) {
           hx = hx - 1
-          if (tx !== hx && ty !== hy) {
-            tx = tx - 1
-            ty = hy - ty
-          } else {
-            tx = tx - 1
-          }
-          visited.add(`${tx},${ty}`)
+          // Check for touching
+
+          // Make touching
+
+          // Add to visited
         }
       }
       case "D": {
         for (let step = 0; step < steps; step++) {
           hy = hy + 1
-          if (ty !== hy && tx !== ty) {
-            tx = hx - tx
-            ty = ty + 1
-          } else {
-            ty = ty + 1
-          }
-          visited.add(`${tx},${ty}`)
+          // Check for touching
+
+          // Make touching
+
+          // Add to visited
         }
       }
     }
