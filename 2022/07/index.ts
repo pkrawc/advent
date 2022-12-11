@@ -75,14 +75,14 @@ test(thirdCount, 7)
 
 /* Results */
 
-// console.log("-----------------")
+console.log("-----------------")
 
-// console.time("Part One Time")
-// const partOneResult = partOne(input)
-// console.timeEnd("Part One Time")
-// console.log("Solution to part 1: ", partOneResult)
+console.time("Part One Time")
+const partOneResult = partOne(input)
+console.timeEnd("Part One Time")
+console.log("Solution to part 1: ", partOneResult)
 
-// console.log("-----------------")
+console.log("-----------------")
 
 // console.time("Part Two Time")
 // const partTwoResult = partTwo(input)
