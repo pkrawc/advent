@@ -68,12 +68,13 @@ function simulate(input: string[][], rounds: number, divisor: number = 3) {
   const monkeys = setUpMonkeys(input)
 
   // We still need the throw test to work, but have to reduce numbers somehow.
+  // BigInt on everything doesn't work. At least, I can't figure out how to test accurately.
   // Get a common divisor for all the monkeys before we start the simulation.
   const stressManager = getCommon(monkeys)
   let round = 1
 
   while (round <= rounds) {
-    for (let [id, monkey] of monkeys) {
+    for (let monkey of monkeys.values()) {
       while (monkey.items.length) {
         const newItem = Math.floor(monkey.inspect() / divisor) % stressManager
         let catcher
