@@ -64,7 +64,7 @@ function getCommon(monkeys: Map<string, Monkey>) {
   }, 1)
 }
 
-function simulate(input: string[][], rounds: number, divisor: number = 3) {
+function simulate(input: string[][], rounds: number, divisor: number) {
   const monkeys = setUpMonkeys(input)
 
   // We still need the throw test to work, but have to reduce numbers somehow.
