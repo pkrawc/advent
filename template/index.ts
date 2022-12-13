@@ -3,6 +3,7 @@ import { readInput, test } from "@utils"
 const prepareInput = (rawInput: string) => rawInput
 
 const input = prepareInput(readInput())
+const testInput = prepareInput(readInput("test-input.txt"))
 
 function partOne(input) {
   return input
