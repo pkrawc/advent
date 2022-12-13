@@ -14,20 +14,52 @@ function createGrid(input: string[][]) {
   const grid = new Map()
   for (let y = 0; y < input.length; y++) {
     for (let x = 0; x < input[0].length; x++) {
-      grid.set([x, y], { height: charToNum(input[y][x]) })
+      let numHeight = charToNum(input[y][x])
+      let start = false
+      let end = false
+      if (numHeight === -14) {
+        numHeight = charToNum("a")
+        start = true
+      }
+      if (numHeight === -28) {
+        numHeight = charToNum("z")
+        end = true
+      }
+      grid.set(`${x},${y}`, {
+        x,
+        y,
+        height: numHeight,
+        start,
+        end,
+        visited: false,
+        distance: start ? 0 : Infinity,
+      })
     }
   }
-  // grid.forEach((value, [x, y], map) => {
-  //   const neighbors = getNeighbors(x, y)
-  //   for ()
-  // })
   return grid
 }
 
 function findEasiestPath(input: string[][]) {
   let steps = 0
   const grid = createGrid(input)
-  console.log(grid)
+  const [[sx, sy], startNode] = Array.from(grid).find(
+    ([key, value]) => value.start
+  )
+  const [[ex, ey], endNode] = Array.from(grid).find(([key, value]) => value.end)
+  let current = startNode
+  while (!endNode.visited) {
+    console.log({ current })
+    const neighbors = getNeighbors(current.x, current.y)
+      .filter(([x, y]) => grid.has(`${x},${y}`))
+      .map(([x, y]) => {
+        return grid.get(`${x},${y}`)
+      })
+    for (let neighbor of neighbors) {
+      console.log(neighbor)
+    }
+    endNode.visited = true
+  }
+  // console.log({ startNode, endNode })
   return steps
 }
 
