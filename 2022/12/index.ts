@@ -10,57 +10,71 @@ function charToNum(char) {
   return char.charCodeAt(0) - 97
 }
 
-function createGrid(input: string[][]) {
-  const grid = new Map()
-  for (let y = 0; y < input.length; y++) {
-    for (let x = 0; x < input[0].length; x++) {
-      let numHeight = charToNum(input[y][x])
-      let start = false
-      let end = false
-      if (numHeight === -14) {
-        numHeight = charToNum("a")
-        start = true
-      }
-      if (numHeight === -28) {
-        numHeight = charToNum("z")
-        end = true
-      }
-      grid.set(`${x},${y}`, {
-        x,
-        y,
-        height: numHeight,
-        start,
-        end,
-        visited: false,
-        distance: start ? 0 : Infinity,
-      })
+interface GridNode {
+  char: string
+}
+
+class Grid {
+  nodes: Map<string, GridNode>
+  adjacent: {}
+  constructor() {
+    this.nodes = new Map()
+    this.adjacent = []
+  }
+
+  addNode(x: number, y: number, node: GridNode) {
+    this.nodes.set(`${x},${y}`, node)
+    this.adjacent[`${x},${y}`] = []
+  }
+
+  exists(a, b) {
+    return Boolean(this.adjacent[a].find((i) => i.id === b.id))
+  }
+
+  addEdge(aCoord, bCoord, weight) {
+    if (!this.exists(aCoord, bCoord)) {
+      this.adjacent[aCoord].push({ id: bCoord, weight })
+    }
+    if (!this.exists(bCoord, aCoord)) {
+      this.adjacent[bCoord].push({ id: aCoord, weight })
     }
   }
+}
+
+function createGrid(input: string[][]) {
+  const grid = new Grid()
+  for (let y = 0; y < input.length; y++) {
+    for (let x = 0; x < input[0].length; x++) {
+      let item = input[y][x]
+      grid.addNode(x, y, { char: item })
+    }
+  }
+  grid.nodes.forEach((value, key) => {
+    const { char } = value
+    const [x, y] = key.split(",").map(Number)
+    const neighbors = getNeighbors(x, y).filter(([nx, ny]) =>
+      grid.nodes.has(`${nx},${ny}`)
+    )
+    neighbors.forEach(([nx, ny]) => {
+      const nKey = `${nx},${ny}`
+      const { char: nChar } = grid.nodes.get(nKey)
+      let weight
+      if (char === "S") {
+        weight = nChar.charCodeAt(0) - "a".charCodeAt(0)
+      }
+      if (char === "E") {
+        weight = nChar.charCodeAt(0) - "z".charCodeAt(0)
+      }
+      weight = nChar.charCodeAt(0) - char.charCodeAt(0)
+      grid.addEdge(key, nKey, weight)
+    })
+  })
   return grid
 }
 
 function findEasiestPath(input: string[][]) {
-  let steps = 0
   const grid = createGrid(input)
-  const [[sx, sy], startNode] = Array.from(grid).find(
-    ([key, value]) => value.start
-  )
-  const [[ex, ey], endNode] = Array.from(grid).find(([key, value]) => value.end)
-  let current = startNode
-  while (!endNode.visited) {
-    console.log({ current })
-    const neighbors = getNeighbors(current.x, current.y)
-      .filter(([x, y]) => grid.has(`${x},${y}`))
-      .map(([x, y]) => {
-        return grid.get(`${x},${y}`)
-      })
-    for (let neighbor of neighbors) {
-      console.log(neighbor)
-    }
-    endNode.visited = true
-  }
-  // console.log({ startNode, endNode })
-  return steps
+  console.log(grid.adjacent)
 }
 
 function partOne(input) {
