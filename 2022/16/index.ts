@@ -5,52 +5,49 @@ const prepareInput = (rawInput: string) => rawInput.split(/\n/)
 const input = prepareInput(readInput())
 const testInput = prepareInput(readInput("test-input.txt"))
 
-class Room {
-  name: string
+type Valve = {
   flowRate: number
-  constructor(name, flowRate) {
-    this.name = name
-    this.flowRate = flowRate
-  }
+  connections: string[]
 }
 
-class ValveMap {
-  nodes: Room[]
-  edges: string[][]
-  constructor() {
-    this.nodes = []
-    this.edges = []
-  }
-
-  getNode(name) {
-    return this.nodes.find((n) => n.name === name)
-  }
-
-  addNode(node, connections) {
-    this.nodes.push(node)
-    this.edges[node.name] = []
-    for (let connection of connections) {
-      const connectionNode = this.getNode(connection)
-      this.edges[node.name].push(connectionNode.name)
-      if (connectionNode) {
-        this.edges[connectionNode.name].push(node.name)
-      } else {
-        this.edges[connectionNode.name] = [node.name]
-      }
-    }
-  }
-}
+type ValveMap = { [key: string]: Valve }
 
 function buildValveMap(input) {
-  const valveMap = new ValveMap()
+  const valveMap: ValveMap = {}
   for (const valve of input) {
     const [current, ...connections] = valve.match(/([A-Z]{2})/g)
     const flowRate = parseInt(valve.match(/flow rate=(\d+)/)[1])
-    const node = new Room(current, flowRate)
-    valveMap.addNode(node, connections)
+    valveMap[current] = { flowRate, connections }
   }
-  console.log(valveMap)
   return valveMap
+}
+
+function buildTimeMap(valveMap: ValveMap) {
+  const timeMap = {}
+  const valveKeys = Object.keys(valveMap).filter(
+    (name) => valveMap[name].flowRate > 0
+  )
+  valveKeys.push("AA")
+  for (let key of Object.keys(valveMap)) {
+    if (!valveKeys.includes(key)) {
+      continue
+    }
+    const queue = [key]
+    const distances = { [key]: 0 }
+    const visited = new Set([key])
+    while (queue.length > 0) {
+      const current = queue.shift()
+      for (let connection of valveMap[current].connections) {
+        if (!visited.has(connection)) {
+          visited.add(connection)
+          distances[connection] = distances[current] + 1
+          queue.push(connection)
+        }
+      }
+    }
+    timeMap[key] = distances
+  }
+  return [timeMap, valveKeys]
 }
 
 function partOne(input) {
@@ -63,9 +60,11 @@ function partTwo(input) {
 
 /* Tests */
 
-const testResult = buildValveMap(testInput)
+const testValves = buildValveMap(testInput)
+const testTimes = buildTimeMap(testValves)
 
-test(testResult, 1000)
+console.log(testTimes)
+// test(testMap, 1000)
 
 /* Results */
 
