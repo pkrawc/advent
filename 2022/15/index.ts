@@ -46,6 +46,11 @@ function partOne(input) {
 
 function partTwo(input) {
   const sensors = launchSensors(input)
+  // Doesn't finish after 10 mins. I don't think this way is possible.
+
+  // New idea to try later. It' has to be on an edge of a sensor right?
+  // So inflate the sensors distance by one, collect all the edge coords, and check those.
+  // That has to be less than 4,000,000^2.
   const max = 4000000
   let result = null
   for (let y = 0; y < max; y++) {
