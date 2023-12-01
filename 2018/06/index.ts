@@ -1,11 +1,30 @@
 import { readInput, test } from "@utils"
+import chalk from "chalk"
 
-const prepareInput = (rawInput: string) =>
-  rawInput.split(/\n/).map((line) => line.split(", "))
+const prepareInput = (rawInput: string) => rawInput
 
 const input = prepareInput(readInput())
+const testInput = prepareInput(readInput("test-input.txt"))
+
+const buildGrid = (coords: [[number, number]]) => {
+  const maxX = coords.reduce((max, [x]) => (x > max ? x : max), 0)
+  const maxY = coords.reduce((max, [, y]) => (y > max ? y : max), 0)
+  const grid = Array.from({ length: maxX + 1 }, () => {
+    return Array.from({ length: maxY + 1 }, () => {
+      return "."
+    })
+  })
+
+  return grid
+}
 
 function partOne(input) {
+  const coords = input.split("\n").map((line) => {
+    const [x, y] = line.split(", ")
+    return [parseInt(x), parseInt(y)]
+  })
+  const grid = buildGrid(coords)
+
   return input
 }
 
@@ -19,20 +38,26 @@ function partTwo(input) {
 
 /* Results */
 
-console.log("-----------------")
+const { log, time, timeEnd } = console
 
-console.time("Part One Time")
-const partOneResult = partOne(input)
-console.timeEnd("Part One Time")
-console.log("Solution to part 1: ", partOneResult)
+const success = chalk.bold.green
+const timer = chalk.bold.blue
+const seperator = chalk.bold.white("-----------------")
 
-console.log("-----------------")
+log(seperator)
 
-console.time("Part Two Time")
-const partTwoResult = partTwo(input)
-console.timeEnd("Part Two Time")
-console.log("Solution to part 2: ", partTwoResult)
+time(timer("Part One Time"))
+const partOneResult = partOne(testInput)
+timeEnd(timer("Part One Time"))
+log(success("Solution to part 1: ", partOneResult))
 
-console.log("-----------------")
+log(seperator)
+
+// time(timer("Part Two Time"))
+// const partTwoResult = partTwo(input)
+// timeEnd(timer("Part Two Time"))
+// log(success("Solution to part 2: ", partTwoResult))
+
+// log(seperator)
 
 export {}

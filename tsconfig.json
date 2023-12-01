@@ -1,18 +1,21 @@
 {
-  "extends": "@tsconfig/next/tsconfig.json",
   "compilerOptions": {
-    "strict": false,
-    "module": "CommonJS",
-    "moduleResolution": "Node",
-    "esModuleInterop": true,
-    "downlevelIteration": true,
-    "baseUrl": ".",
+    // project options
+    "lib": ["ESNext"], // specifies which default set of type definitions to use ("DOM", "ES6", etc)
+    "removeComments": true, // Strips all comments from TypeScript files when converting into JavaScript- you rarely read compiled code so this saves space
+    "target": "ESNext", // Target environment. Most modern browsers support ES6, but you may want to set it to newer or older. (defaults to ES3)
+
+    // Module resolution
+    "baseUrl": "./", // Lets you set a base directory to resolve non-absolute module names.
+    "esModuleInterop": true, // fixes some issues TS originally had with the ES6 spec where TypeScript treats CommonJS/AMD/UMD modules similar to ES6 module
+    "moduleResolution": "node", // Pretty much always node for modern JS. Other option is "classic"
     "paths": {
       "@utils": ["utils/index.ts"]
-    }
+    }, // A series of entries which re-map imports to lookup locations relative to the baseUrl
+
+    // Source Map
+    "sourceMap": true, // enables the use of source maps for debuggers and error reporting etc
+    "sourceRoot": "/" // Specify the location where a debugger should locate TypeScript files instead of relative source locations."
   },
-  "ignore": ["node_modules"],
-  "ts-node": {
-    "require": ["tsconfig-paths/register"]
-  }
+  "exclude": ["node_modules/**/*"]
 }
