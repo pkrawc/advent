@@ -16,7 +16,7 @@ if (!days.includes(day)) {
   cp("-r", "template", `${year}/${day}`)
 }
 
-spawn("nodemon", [`${year}/${day}/index.ts`], {
+spawn("tsx", ["watch", `${year}/${day}/index.ts`], {
   stdio: "inherit",
 })
 
