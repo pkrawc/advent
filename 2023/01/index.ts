@@ -1,6 +1,5 @@
 import { readInput, test } from "@utils"
 import chalk from "chalk"
-import { parse } from "path"
 
 const prepareInput = (rawInput: string) => rawInput
 
