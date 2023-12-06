@@ -7,7 +7,7 @@ type Cell = {
   y: number
 }
 
-type PartNumber = [number, Cell[]]
+type PartNumber = [number[], Cell[]]
 
 const prepareInput = (rawInput: string): Cell[][] =>
   rawInput.split(/\n/).map((row, rIdx) => {
@@ -17,20 +17,9 @@ const prepareInput = (rawInput: string): Cell[][] =>
 const input = prepareInput(readInput())
 const testInput = prepareInput(readInput("test-input.txt"))
 
-function getSymbols(input) {
-  const symbols = new Set<string>()
-  for (let row of input) {
-    for (let { char } of row) {
-      if (!char.match(/\d|\./)) {
-        symbols.add(char)
-      }
-    }
-  }
-  return symbols
-}
-
 function getNumbers(grid: Cell[][]) {
-  const partNumbers = new Map<number, Cell[]>()
+  let idx = 0
+  const partNumbers = new Map<number[], Cell[]>()
   for (let row of grid) {
     const numberCells = new Set<Cell>()
     for (let { char, x, y } of row) {
@@ -39,8 +28,9 @@ function getNumbers(grid: Cell[][]) {
           const number = parseInt(
             [...numberCells].map((c: any) => c.char).join("")
           )
-          partNumbers.set(number, Array.from(numberCells))
+          partNumbers.set([number, idx], Array.from(numberCells))
           numberCells.clear()
+          idx++
         }
         continue
       } else {
@@ -52,7 +42,6 @@ function getNumbers(grid: Cell[][]) {
 }
 
 function filterPartNumbers(numbers: PartNumber[], grid: Cell[][]) {
-  const symbols = getSymbols(grid)
   return numbers.filter(([_, cells]) => {
     const neighbors = new Set()
     for (let cell of cells) {
@@ -61,8 +50,8 @@ function filterPartNumbers(numbers: PartNumber[], grid: Cell[][]) {
         if (grid[y]?.[x]) neighbors.add(grid[y]?.[x])
       }
     }
-    return Array.from(neighbors).some((neighbor: any) =>
-      symbols.has(neighbor.char)
+    return Array.from(neighbors).some(
+      (neighbor: Cell) => !neighbor.char.match(/\d|\./)
     )
   })
 }
@@ -70,7 +59,7 @@ function filterPartNumbers(numbers: PartNumber[], grid: Cell[][]) {
 function partOne(input) {
   const partNumbers = getNumbers(input)
   const result = filterPartNumbers(partNumbers, input)
-  const numbersSum = sum(result.map(([num]) => num))
+  const numbersSum = sum(result.map(([[num]]) => num))
   // console.log(JSON.stringify(result, null, 2))
   return numbersSum
 }
@@ -83,7 +72,7 @@ function partTwo(input) {
 
 const partNumbers = getNumbers(testInput)
 const filteredPartNums = filterPartNumbers(partNumbers, testInput)
-const numbersSum = sum(filteredPartNums.map(([num]) => num))
+const numbersSum = sum(filteredPartNums.map(([[num]]) => num))
 
 // console.log(JSON.stringify(filteredPartNums, null, 2))
 
