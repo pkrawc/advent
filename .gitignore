@@ -1,2 +1,5 @@
 .yarn
 node_modules
+
+input.txt
+test-input.txt
