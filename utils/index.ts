@@ -52,3 +52,7 @@ export function getNeighbors(x: number, y: number) {
 export function sum(numbers: number[]) {
   return numbers.reduce((acc, curr) => acc + curr, 0)
 }
+
+export function count<T>(arr: T[], el: T) {
+  return arr.filter(x => x === el).length
+}

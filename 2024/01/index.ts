@@ -39,7 +39,6 @@ function partTwo(input) {
     listOne.push(parseInt(one))
     listTwo.push(parseInt(two))
   }
-  console.log({listOne, listTwo})
   for (const idx in listOne) {
     const numOne = listOne[idx]
     if (simScore.has(numOne)) {
