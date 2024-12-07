@@ -59,18 +59,18 @@ function tryCoord(
   return { visited, positions, looped }
 }
 
+const getCoordNums = (coord) => coord.split(",").map((n) => parseInt(n))
+
 function partOne(input: Map<string, string>) {
   const [coords, dir] = Array.from(input).find((cell) =>
     directions.some((d) => d[0] === cell[1])
   )
-  const [gx, gy] = coords.split(",").map((n) => parseInt(n))
+  const [gx, gy] = getCoordNums(coords)
   const guard = { x: gx, y: gy, dir }
   const { positions } = tryCoord(input, guard)
 
   return positions.size
 }
-
-const getCoordNums = (coord) => coord.split(",").map((n) => parseInt(n))
 
 function partTwo(input: Map<string, string>) {
   const [coords, dir] = Array.from(input).find((cell) =>

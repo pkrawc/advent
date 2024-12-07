@@ -41,5 +41,3 @@ timeEnd(timer("Part Two Time"))
 log(success("Solution to part 2: ", partTwoResult))
 
 log(seperator)
-
-export {}
