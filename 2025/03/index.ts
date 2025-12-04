@@ -1,22 +1,58 @@
-import { readInput, test } from "@utils"
+import { readInput, sum, test } from "@utils"
 import chalk from "chalk"
 
-const prepareInput = (rawInput: string) => rawInput
+const prepareInput = (rawInput: string) =>
+  rawInput.split(/\n/).map((l) => l.split("").map(Number))
 
 const input = prepareInput(readInput())
 const testInput = prepareInput(readInput("test-input.txt"))
 
+function getLargestIdx(input: number[]) {
+  let largest = -1
+  let idx = -1
+
+  for (let [i, digit] of input.entries()) {
+    if (digit > largest) {
+      largest = digit
+      idx = i
+    }
+  }
+  return idx
+}
+
+function getMaxJoltage(bank: number[], onCount: number = 2) {
+  while (onCount > 1) {
+    const nextOnCount = onCount - 1
+    const searchableBattries = bank.slice(0, bank.length - nextOnCount)
+    const batteryIdx = getLargestIdx(searchableBattries)
+    const nextBank = bank.slice(batteryIdx + 1)
+
+    return parseInt(
+      `${bank[batteryIdx]}${getMaxJoltage(nextBank, nextOnCount)}`
+    )
+  }
+  return bank[getLargestIdx(bank)]
+}
+
 function partOne(input) {
-  return input
+  let highestJoltages = []
+  for (let bank of input) {
+    highestJoltages.push(getMaxJoltage(bank, 2))
+  }
+  return sum(highestJoltages)
 }
 
 function partTwo(input) {
-  return input
+  let highestJoltages = []
+  for (let bank of input) {
+    highestJoltages.push(getMaxJoltage(bank, 12))
+  }
+  return sum(highestJoltages)
 }
 
 /* Tests */
 
-// test(result, expected)
+test(partOne(testInput), 357)
 
 /* Results */
 
